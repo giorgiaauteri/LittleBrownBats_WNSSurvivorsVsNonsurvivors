@@ -18,7 +18,7 @@ rm(list = ls())
 # For plink structure file (ending in .strct_in), 1) save a copy with new ending (.stru) and
 #    2) delete first two rows in .stru file
 # For structure file from stacks, save copy with .stru ending
-gind0 <- read.structure("D:/Mirror/Mirror/Projects/PhD Thesis/SurvMortWNS/Data/SurvMort21/Pops_SMAll/populations_33Inds_NoHead.stru", 
+gind0 <- read.structure("populations_33Inds_NoHead.stru", 
                         n.ind = 33,    #!!! Change to match the number of individuals
                         n.loc = 19797, #!!! Change to match the number of variant sites
                         col.lab = 1, 
