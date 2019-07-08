@@ -16,7 +16,8 @@ require(pegas)
 options(scipen = 999)
 
 #READ VCF
-data <- read.table('D:/Mirror/Mirror/Projects/PhD Thesis/SurvMortWNS/Data/PostStructure/populations.snpsSurvMort.vcf', header = FALSE, sep = "\t")
+##This file can be found in the Dryad repository for Auteri & Knowles, 2019
+data <- read.table('populations.snpsSurvMort.vcf', header = FALSE, sep = "\t")
 head(data[1:20,1:20])
 
 #SEQUENCE LENGTH
@@ -32,31 +33,26 @@ new_data <- data.frame(loci_ID = as.numeric(sub(":.*", "", data$V3)), #sub(patte
 
 head(new_data)
 min(new_data$pos)#should always be position 5 (first positions are the adapters)
-max(new_data$pos)#should always be position 139 !!!UNLESS!!! data is mapped to reference genome, may be longer if you allowed for some insertions
+max(new_data$pos)#should always be position 139 unless you allowed for some insertions
 table(new_data$pos)
-length(unique(new_data$loci_ID))#how many loci do I have
+length(unique(new_data$loci_ID))#how many loci do you have
 
 
 par(mar = rep(2, 4))
-#saving graph with frequency of variable sites along the loci
-#pdf("./SNPdistr_pos140bp.pdf")
+#graph with frequency of variable sites along the loci
 hist(new_data$pos, breaks = seq_len, xlab = 'Position along the loci', main = 'The position of segregating sites'); #for unmapped loci
 #play with first abline number to determine cutoff
 abline(4500, 0, col = "red")#helps to find where starts to increase toward the end, last positions have strong increase
 abline(v = 138, col = "red")#helps to figure out where to cut off before increase in bad calls
 #move the lines around to visualize depending on my case
-#dev.off()
 
 #BASE ON THE GRAPH, CHOOSE HOW MANY POSITION TO DELETE FROM THE END
 to_del <-2 #how many sites to delete in the end of the sequence
-#10 is based on the 130 I chose for the ab line above
 seq_len_cut <- seq_len - to_del
 
 #create a whitelist to exclude those 10 (to_del) positions
 whitelist <- subset(new_data, pos < seq_len_cut)[,c(1,3,4)]
-#pdf("./SNPdistr_pos_cutto125bp.pdf")
-hist(whitelist$pos, xlim = c(0,seq_len_cut), breaks = c(seq(-1, seq_len_cut -1 , by=1)), xlab = 'Position along the loci', main = 'The position of segregating sites');
-#dev.off()
+hist(whitelist$pos, xlim = c(0,seq_len_cut), breaks = c(seq(-1, seq_len_cut -1 , by=1)), xlab = 'Position along the loci', main = 'The position of segregating sites')
 
 #calculating theta for all loci
 var.sites <- count(whitelist, "loci_ID")
@@ -71,28 +67,26 @@ for (i in 1:length(theta_calc$theta)){
 
 #calculating the 95% quantile to exclude loci extremely variable
 quant <- quantile(theta_calc$theta, probs=0.95) #set the value to be variability threshold
-quant #0.02587015 for Myotis lib 1 (mapped to ref)
-#pdf("./theta125bp.pdf")
+quant #theta cutoff
 hist(theta_calc$theta)
 abline(v = quant, col="red")
-#dev.off()
 
 #what is the maximum number of mutations in a loci
-max(theta_calc$freq) #38; max theta (variable positions before ble positions in one loci)
+max(theta_calc$freq) #before filtering
 x <- subset(theta_calc, theta < quant)
 max(x$freq) #14; max theta after, make sure is realistic for a 140 bp sequence
 #think about what mutation rate the spp might have
 
 #saving whitelist for re-run populations in stacks (write blacklist and subtract it from whitelist)
 blacklist <- subset(theta_calc, theta > quant)[,1]
-#write.table(blacklist, file="blacklist.txt", sep = '\n', row.names = F, col.names = F)
-#above blacklist would only be for highly variable loci
+#write.table(blacklist, file="blacklist.txt", sep = '\n', row.names = F, col.names = F) #If you want to use a blacklist
+#above blacklist would only contain highly variable loci
 
 #removes the blacklist from the whitelist and write off white list
 whitelist$blacklist <- match(whitelist$loci_ID, blacklist, nomatch = 0)
 whitelist_final <- subset(whitelist, blacklist == 0)
-length(unique(whitelist_final$loci_ID)) #final number of unique loci, this is the number I need to get out with "write random loci"
-length(whitelist_final$loci_ID) #final number of snps
+length(unique(whitelist_final$loci_ID)) #final number of unique loci on whitelist
+length(whitelist_final$loci_ID) #final number of snps on whitelist
 write.table(whitelist_final[,1:2], file="whitelist_BRACHY.txt", sep = '\t', row.names = F, col.names = F)
 
 #re-enable scientific notation
