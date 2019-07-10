@@ -6,7 +6,7 @@
 #Overvieww and processing of the fst data
 
 #read in data
-fdat <- read.table("D:/Mirror/Mirror/Projects/PhD Thesis/SurvMortWNS/Data/SurvMort21/Pops_SMAll/populations.fst_mortality-survivor.tsv",
+fdat <- read.table("populations.fst_mortality-survivor.tsv",
                    header = FALSE, 
                    sep = "\t")
 colnames(fdat) <- c('LocusID',	'Pop1',	'Pop2',	'CHROM',	'POS', 'Column',	'OverallPi',	'AMOVAFst',	'FishersP',	'OddsRatio',	'CILow',	'CIHigh.All',	'LOD',	'CorrectedAMOVAFst', 'SmoothedAMOVAFst',	'SmoothedAMOVAFst P-value',	'WindowSNPCount')
@@ -54,4 +54,4 @@ ggplot(fdat, aes(x=LocusID/1000000, y=(AMOVAFst), colour=CHROM)) +
 #Write output file with selected loci
 
 selectedLoci <- na.omit(fdat[fdat$AMOVAFst >= cutoff,])
-write.csv(selectedLoci, "D:/Mirror/Mirror/Projects/PhD Thesis/SurvMortWNS/Data/SurvMort21/Pops_SMAll/SelectedLoci.csv")
+write.csv(selectedLoci, "SelectedLoci.csv")
