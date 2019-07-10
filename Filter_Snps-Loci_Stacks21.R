@@ -16,7 +16,7 @@ require(pegas)
 options(scipen = 999)
 
 #READ VCF
-##This file can be found in the Dryad repository for Auteri & Knowles, 2019
+##The .vcf file can be found in the Dryad repository for Auteri & Knowles, 2019
 data <- read.table('populations.snpsSurvMort.vcf', header = FALSE, sep = "\t")
 head(data[1:20,1:20])
 
