@@ -5,17 +5,17 @@ library(vcfR)
 
 #Read in outflank data
 ##Converted from snp.vcf to Eigensoft in PGD spyder, then added " " to separate snps
-o <- read.table("D:/Mirror/Mirror/Projects/PhD Thesis/SurvMortWNS/Data/SurvMort21/Pops_SMAll/OutflankOutput.geno",
+o <- read.table("OutflankInput.geno",
                 sep = "")
 levels(factor(as.numeric(unlist(o))))
 ot <- t(o)
 
 #Read in list of sample IDs
-p <- read.table("D:/Mirror/Mirror/Projects/PhD Thesis/SurvMortWNS/Data/SurvMort21/Pops_SMAll/popnamesOutflank.txt",
+p <- read.table("popnamesOutflank.txt",
                 sep = "")
 
 #Read in list of loci names
-l <- read.csv("D:/Mirror/Mirror/Projects/PhD Thesis/SurvMortWNS/Data/SurvMort21/Pops_SMAll/lociNames.csv",
+l <- read.csv("lociNames.csv",
               header = F)
 
 #Convert to Outflank format
@@ -79,4 +79,4 @@ points(P1$He[P1$qvalues <= 0.01], P1$FSTNoCorr[P1$qvalues <= 0.01], pch = 21, ce
 
 #write file of candidate loci
 selectedLoci <- na.omit(P1[P1$qvalues <= 0.05,])
-write.csv(selectedLoci, "D:/Mirror/Mirror/Projects/PhD Thesis/SurvMortWNS/Data/SurvMort21/Pops_SMAll/SelectedLoci_OutFlank.csv")
+write.csv(selectedLoci, "SelectedLoci_OutFlank.csv")
