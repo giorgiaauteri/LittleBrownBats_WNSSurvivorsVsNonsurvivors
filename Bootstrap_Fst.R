@@ -3,9 +3,6 @@ library("diveRsity")
 
 set.seed(1234)
 
-#set working directory
-setwd("/scratch/lsa_flux/gauteri/Myotis1_SurvMort/ProcRad/Mapped21/Bootstrap_SMAll")
-
 #calculate fst with CI bootstrap
 calcs <- diffCalc(infile = "populations.snps.genepop",
          outfile = "BootstrapResults",
