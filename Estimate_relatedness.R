@@ -6,7 +6,7 @@
 library("related")
 
 #read in rad-seq data
-input <- readgenotypedata("D:/Mirror/Mirror/Projects/PhD Thesis/SurvMortWNS/Data/SurvMort21/Pops_SMAll/relatedInput.txt")
+input <- readgenotypedata("relatedInput.txt")
 
 ###########################################################################
 #Subsetting data so there is a lower percent missing data
@@ -119,12 +119,12 @@ simrel <- cleanuprvals(output$relatedness, 100)
 
 #Write simulation results to store them
 write.table(simrel, 
-             "D:/Mirror/Mirror/Projects/PhD Thesis/SurvMortWNS/Data/SurvMort21/Pops_SMAll/Related/related_simResults_Miss012_MinAF_01_250Rand.txt",
+             "related_simResults_Miss012_MinAF_01_250Rand.txt",
              quote = FALSE,
              row.names = FALSE)
 
 #read in previously simulated data (see above) if needed
-#simrel <- read.table("D:/Mirror/Mirror/Projects/PhD Thesis/SurvMortWNS/Data/SurvMort21/Pops_SMAll/Related/related_simResults_Miss01_MinAF_00.txt",
+#simrel <- read.table("related_simResults_Miss012_MinAF_01_250Rand.txt",
 #                     header = TRUE)
 
 ################################################################################
@@ -161,12 +161,12 @@ relFilt <- coancestry(gDat_filtered, trioml = 1, wang = 1, quellergt = 1,
 
 #write point estimate (empiracle) results
 write.table(relFilt$relatedness,
-           "D:/Mirror/Mirror/Projects/PhD Thesis/SurvMortWNS/Data/SurvMort21/Pops_SMAll/Related/relRelatedness_filtered_Final_Miss012_MinAF_01.txt",
+           "relRelatedness_filtered_Final_Miss012_MinAF_01.txt",
            quote = FALSE)
 
 #write Confidence intervals
 write.table(relFilt$relatedness.ci95,
-           "D:/Mirror/Mirror/Projects/PhD Thesis/SurvMortWNS/Data/SurvMort21/Pops_SMAll/Related/relRelatedness_filtered_Final_Miss012_MinAF_01_95CI.txt",
+           "relRelatedness_filtered_Final_Miss012_MinAF_01_95CI.txt",
            quote = FALSE)
 
 #Basic stats
