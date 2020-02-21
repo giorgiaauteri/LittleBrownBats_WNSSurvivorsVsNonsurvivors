@@ -1,5 +1,6 @@
 # LittleBrownBats_WNSSurvivorsVsNonsurvivors
-Code and input files for Auteri and Knowles 2019
+Code and input files for Auteri and Knowles 2020, Decimated little brown bats show potential for adaptive change, Scientific Reports (10): 3023.
+https://www.nature.com/articles/s41598-020-59797-4
 
 Scripts and other files provided in this repository are intended for understanding and adapting the analyses performed in the publication Auteri, G. and L.L. Knowles, 2019. Please cite this paper when using altered versions of scripts for other projects, with the excpetion of the Filter_SNPs-Loci_Stacks21.R script which requires no citation. The dataset consists of genomic data (Restriction site Associated DNA Sequences; RAD-Seq) for little brown bats (Myotis lucifugus) which are survivors versus non-survivors of the bat disease white-nose syndrome. The objective is to find loci for which the allelic variants are significantly partitioned between disease survivors versus non-survivors (a.k.a. outlier loci), as such loci may be indicative of genes which can confer disease susceptibility versus tolerance/resistance.
 
